@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 15:41:45 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/28 07:48:34 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/09/29 14:14:12 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ int		init_data(t_table *table);
 // DINER
 
 void	dinner_start(t_table *table);
+void	eat(t_philo *philo);
+
+// ACTION
+
+void	think(t_philo *philo);
+void	go_sleep(t_philo *philo);
 void	eat(t_philo *philo);
 
 #endif

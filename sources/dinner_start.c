@@ -3,62 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   dinner_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 11:50:02 by ldubau            #+#    #+#             */
-/*   Updated: 2026/09/29 11:34:34 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/09/29 14:14:33 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	eat(t_philo *philo)
-{
-	t_mtx	*first;
-	t_mtx	*second;
-
-	if (philo->id % 2 == 1)
-	{
-		first = &philo->right_fork->fork;
-		second = &philo->left_fork->fork;
-	}
-	else
-	{
-		first = &philo->left_fork->fork;
-		second = &philo->right_fork->fork;
-	}
-	pthread_mutex_lock(first);
-	mtx_printf(philo, "has taken a fork");
-	pthread_mutex_lock(second);
-	mtx_printf(philo, "has taken a fork");
-
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_meal = get_time_ms();
-	pthread_mutex_unlock(&philo->philo_mutex);
-
-	mtx_printf(philo, "is eating");
-	ft_usleep(philo->table->time_to_eat);
-
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->nbr_meal++;
-	if (philo->nbr_meal == philo->table->max_meals)
-		philo->full = true;
-	pthread_mutex_unlock(&philo->philo_mutex);
-
-	pthread_mutex_unlock(first);
-	pthread_mutex_unlock(second);
-}
 void	monitor(void *arg)
 {
 	t_table	*table;
 	long	last_meal;
 	bool	full;
+	long	i;
+	long	nbr_full;
 
 	table = (t_table *)arg;
+	i = 0;
+	nbr_full = 0;
 	while(1)
 	{
-		ft_usleep(1);
-		pthread_mutex_lock(table->philos)
+		ft_usleep(10);
+		pthread_mutex_lock(&table->philos[i].philo_mutex);
+		last_meal = table->philos[i].last_meal;
+		full = table->philos[i].full;
+		pthread_mutex_unlock(&table->philos[i].philo_mutex);
+		if (!full)
+		{
+			if (get_time_ms() - last_meal >= table->time_to_die)
+				mtx_printf(&table->philos[i], "died");
+		}
+		else
+			nbr_full += 1;
+		if (nbr_full >= table->philo_nbr)
+			table->end_simulation = true;
+		i++;
+		if (i >= table->philo_nbr)
+			i = 0;
 	}
 }
 
@@ -72,7 +55,7 @@ void	routine(void *arg)
 		if (philo->id % 2 == 1 && philo->nbr_meal == 0)
 			ft_usleep(philo->table->time_to_eat / 2);
 		eat(philo);
-		// sleep
+		sleep(philo);
 	}
 }
 
