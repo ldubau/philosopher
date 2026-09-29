@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 11:50:02 by ldubau            #+#    #+#             */
-/*   Updated: 2026/09/28 12:15:16 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/09/29 11:34:34 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,12 @@ void	eat(t_philo *philo)
 
 	pthread_mutex_lock(&philo->philo_mutex);
 	philo->last_meal = get_time_ms();
+	pthread_mutex_unlock(&philo->philo_mutex);
+
 	mtx_printf(philo, "is eating");
 	ft_usleep(philo->table->time_to_eat);
+
+	pthread_mutex_lock(&philo->philo_mutex);
 	philo->nbr_meal++;
 	if (philo->nbr_meal == philo->table->max_meals)
 		philo->full = true;
@@ -44,13 +48,44 @@ void	eat(t_philo *philo)
 	pthread_mutex_unlock(first);
 	pthread_mutex_unlock(second);
 }
+void	monitor(void *arg)
+{
+	t_table	*table;
+	long	last_meal;
+	bool	full;
+
+	table = (t_table *)arg;
+	while(1)
+	{
+		ft_usleep(1);
+		pthread_mutex_lock(table->philos)
+	}
+}
+
+void	routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	while (philo->full == false)
+	{
+		if (philo->id % 2 == 1 && philo->nbr_meal == 0)
+			ft_usleep(philo->table->time_to_eat / 2);
+		eat(philo);
+		// sleep
+	}
+}
 
 void	dinner_start(t_table *table)
 {
 	int	i;
 
 	i = 0;
+	while (i < table->philo_nbr)
+		pthread_create(&table->philos[i].thread_id, NULL, routine, &table->philos[i++]);
+	i = 0;
 	table->start_simulation = get_time_ms();
 	while (i < table->philo_nbr)
 		table->philos[i++].last_meal = table->start_simulation;
+
 }

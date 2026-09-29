@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 12:26:09 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/21 15:44:04 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/09/28 17:12:40 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,7 @@ int main(int ac, char **av)
 	if (!init_data(&table))
 		return (1);
 
-	// dinner_start
-
-	int i = 0;
-	while (i < table.philo_nbr)
-	{
-		printf("\033[32mphilo id = %d\n\033[33mleft fork = %d\n\033[34mright fork = %d\n\033[0m\n", table.philos[i].id, table.philos[i].left_fork->fork_id, table.philos[i].right_fork->fork_id);
-		i++;
-	}
+	dinner_start(&table);
 
 	free_all(&table, table.philo_nbr, table.philo_nbr); // clean_table / add all mutex
 	return (0);
