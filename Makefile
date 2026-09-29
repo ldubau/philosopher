@@ -15,7 +15,7 @@ BLUE		= \033[0;34m
 RED			= \033[0;31m
 RESET		= \033[0m
 
-FILES		= dinner_start.c init.c mutex_function.c parsing.c philo.c time.c utils.c
+FILES		= dinner_start.c init.c mutex_function.c parsing.c philo.c time.c utils.c action.c
 SRC			= $(addprefix $(SRC_DIR)/, $(FILES))
 OBJ			= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 15:41:45 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/29 14:14:12 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/09/29 15:53:25 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,18 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	long	philo_nbr;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	max_meals;
-	long	start_simulation;
-	bool	end_simulation;
-	t_mtx	print_mutex;
-	t_mtx	sim_mutex;
-	t_fork	*forks;
-	t_philo	*philos;
+	long		philo_nbr;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		max_meals;
+	long		start_simulation;
+	bool		end_simulation;
+	t_mtx		print_mutex;
+	t_mtx		sim_mutex;
+	t_fork		*forks;
+	t_philo		*philos;
+	pthread_t	monitor;
 }	t_table;
 
 // UTILS
@@ -74,6 +75,7 @@ void	ft_usleep(long ms);
 
 bool	mtx_sim(t_table *table);
 void	mtx_printf(t_philo *philo, char *msg);
+bool	mtx_full(t_philo *philo);
 
 // PARSING
 
@@ -86,7 +88,6 @@ int		init_data(t_table *table);
 // DINER
 
 void	dinner_start(t_table *table);
-void	eat(t_philo *philo);
 
 // ACTION
 

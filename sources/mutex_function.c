@@ -6,11 +6,21 @@
 /*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 11:54:00 by ldubau            #+#    #+#             */
-/*   Updated: 2026/09/21 17:55:54 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/09/29 15:53:30 by ldubau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+bool	mtx_full(t_philo *philo)
+{
+	bool	ret;
+
+	pthread_mutex_lock(&philo->philo_mutex);
+	ret = philo->full;
+	pthread_mutex_unlock(&philo->philo_mutex);
+	return (ret);
+}
 
 bool	mtx_sim(t_table *table)
 {
