@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dinner_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 11:50:02 by ldubau            #+#    #+#             */
-/*   Updated: 2026/09/29 16:00:01 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/09/29 18:00:51 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	*monitor(void *arg)
 		full = table->philos[i].full;
 		pthread_mutex_unlock(&table->philos[i].philo_mutex);
 		if (!full)
+		{
 			if (get_time_ms() - last_meal >= table->time_to_die)
 			{
 				long time;
@@ -42,6 +43,7 @@ void	*monitor(void *arg)
 				pthread_mutex_lock(&table->print_mutex);
 				break;
 			}
+		}
 		else
 			nbr_full += 1;
 		if (nbr_full >= table->philo_nbr)
@@ -56,7 +58,7 @@ void	*monitor(void *arg)
 			i = 0;
 			usleep(200);
 		}
-		nbr_full == 0;
+		nbr_full = 0;
 	}
 	return (NULL);
 }
@@ -87,11 +89,16 @@ void	dinner_start(t_table *table)
 	while (i < table->philo_nbr)
 		table->philos[i++].last_meal = table->start_simulation;
 	i = 0;
-	pthread_create(&table->monitor, NULL, monitor, &table->monitor);
+	pthread_create(&table->monitor, NULL, monitor, table);
 	while (i < table->philo_nbr)
 	{
 		pthread_create(&table->philos[i].thread_id, NULL, routine, &table->philos[i]);
 		i++;
 	}
-
+	pthread_join(table->monitor, NULL);
+	while (i < table->philo_nbr)
+	{
+		pthread_join(table->philos[i].thread_id, NULL);
+		i++;
+	}
 }
