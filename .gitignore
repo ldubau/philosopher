@@ -1,0 +1,11 @@
+# Build output
+object/
+*.o
+philo
+
+# Debug / tooling
+*.dSYM/
+vgcore.*
+.vscode/
+.idea/
+.DS_Store

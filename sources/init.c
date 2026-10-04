@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/15 11:16:07 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/21 15:34:38 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/10/04 12:23:49 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int	init_philo(t_table *table)
 	i = 0;
 	table->philos = malloc (sizeof(t_philo) * table->philo_nbr);
 	if (!table->philos)
+	{
+		pthread_mutex_destroy(&table->print_mutex);
+		pthread_mutex_destroy(&table->sim_mutex);
 		return (0);
+	}
 	while (i < table->philo_nbr)
 	{
 		table->philos[i].id = i + 1;
@@ -55,7 +59,8 @@ int	init_forks(t_table *table)
 		if (table->philo_nbr == 1)
 			table->philos[i].left_fork = NULL;
 		else
-			table->philos[i].left_fork = &table->forks[(i + 1) % table->philo_nbr];
+			table->philos[i].left_fork
+				= &table->forks[(i + 1) % table->philo_nbr];
 		i++;
 	}
 	return (1);
@@ -89,6 +94,5 @@ int	init_data(t_table *table)
 	check = init_forks(table);
 	if (check == 0)
 		return (0);
-
 	return (1);
 }

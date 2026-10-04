@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/11 15:41:45 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/29 15:53:25 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/10/04 12:25:27 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <limits.h>
 # include <stdbool.h>
 
-typedef pthread_mutex_t t_mtx;
+typedef pthread_mutex_t	t_mtx;
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
 typedef struct s_fork
 {
@@ -79,7 +79,7 @@ bool	mtx_full(t_philo *philo);
 
 // PARSING
 
-int	parsing(t_table *table, char **av);
+int		parsing(t_table *table, char **av);
 
 // INIT
 

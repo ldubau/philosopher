@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 18:19:58 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/10/03 19:22:52 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/10/04 11:58:54 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int	free_all(t_table *table, int n_philo, int n_fork)
 	int	i;
 
 	i = 0;
-	while (i < n_fork) // a refaire pour free les philo separement
+	while (i < n_fork)
 	{
 		pthread_mutex_destroy(&table->forks[i].fork);
 		i++;
 	}
 	i = 0;
-	while (i < n_philo) // a refaire pour free les philo separement
+	while (i < n_philo)
 	{
 		pthread_mutex_destroy(&table->philos[i].philo_mutex);
 		i++;
