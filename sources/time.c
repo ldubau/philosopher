@@ -6,7 +6,7 @@
 /*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/17 17:42:21 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/21 09:45:59 by leonpouet        ###   ########.fr       */
+/*   Updated: 2026/10/03 19:22:19 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long	get_time_ms(void)
 {
-	struct timeval	tv; // overflow
+	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);

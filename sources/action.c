@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/29 14:09:03 by ldubau            #+#    #+#             */
-/*   Updated: 2026/09/29 14:13:12 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/10/03 19:21:41 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,16 @@ void	eat(t_philo *philo)
 	mtx_printf(philo, "has taken a fork");
 	pthread_mutex_lock(second);
 	mtx_printf(philo, "has taken a fork");
-
 	pthread_mutex_lock(&philo->philo_mutex);
 	philo->last_meal = get_time_ms();
 	pthread_mutex_unlock(&philo->philo_mutex);
-
 	mtx_printf(philo, "is eating");
 	ft_usleep(philo->table->time_to_eat);
-
 	pthread_mutex_lock(&philo->philo_mutex);
 	philo->nbr_meal++;
 	if (philo->nbr_meal == philo->table->max_meals)
 		philo->full = true;
 	pthread_mutex_unlock(&philo->philo_mutex);
-
 	pthread_mutex_unlock(first);
 	pthread_mutex_unlock(second);
 }

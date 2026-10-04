@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldubau <ldubau@student.42.fr>              +#+  +:+       +#+        */
+/*   By: leonpouet <leonpouet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/14 18:19:58 by leonpouet         #+#    #+#             */
-/*   Updated: 2026/09/21 17:14:50 by ldubau           ###   ########.fr       */
+/*   Updated: 2026/10/03 19:22:52 by leonpouet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	is_digit(char *s)
 
 int	free_all(t_table *table, int n_philo, int n_fork)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < n_fork) // a refaire pour free les philo separement
